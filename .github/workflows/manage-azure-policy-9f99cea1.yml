@@ -1,0 +1,58 @@
+name: manage-azure-policy-9f99cea1
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'testPolicyUploadAzure/initiatives/Public_network_access_should_be_disabled_for_PAAS_services_Deny-PublicEndpoints/**'
+#      - 'testPolicyUploadAzure/initiatives/Deploy_Azure_Security_Center_configuration_Deploy-ASC-Config/**'
+#      - 'testPolicyUploadAzure/initiatives/Deploy_Diagnostic_Settings_to_Azure_Services_Deploy-Diag-LogAnalytics/**'
+#      - 'testPolicyUploadAzure/initiatives/Deploy_SQL_Database_built-in_SQL_security_configuration_Deploy-Sql-Security/**'
+#      - 'testPolicyUploadAzure/initiatives/Deny_or_Audit_resources_without_Encryption_with_a_customer-managed_key_(CMK)_Enforce-Encryption-CMK/**'
+#      - 'testPolicyUploadAzure/initiatives/Deny_or_Deploy_and_append_TLS_requirements_and_SSL_enforcement_on_resources_without_Encryption_in_transit_Enforce-EncryptTransit/**'
+#      - 'testPolicyUploadAzure/policies/RDP_access_from_the_Internet_should_be_blocked_Deny-RDP-From-Internet/**'
+#      - 'testPolicyUploadAzure/policies/Network_interfaces_should_disable_IP_forwarding_88c0b9da-ce96-4b03-9635-f29a937e2900/**'
+#      - 'testPolicyUploadAzure/policies/Secure_transfer_to_storage_accounts_should_be_enabled_404c3081-a854-4457-ae30-26a93ef643f9/**'
+#      - 'testPolicyUploadAzure/policies/Subnets_should_have_a_Network_Security_Group_Deny-Subnet-Without-Nsg/**'
+#      - 'testPolicyUploadAzure/policies/Auditing_on_SQL_server_should_be_enabled_a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9/**'
+#      - 'testPolicyUploadAzure/policies/Configure_backup_on_virtual_machines_without_a_given_tag_to_a_new_recovery_services_vault_with_a_default_policy_98d0b9f8-fd90-49c9-88e2-d3baf3b0dd86/**'
+#      - 'testPolicyUploadAzure/policies/Deploy_SQL_DB_transparent_data_encryption_86a912f6-9a06-4e26-b447-11b16ba8659f/**'
+#      - 'testPolicyUploadAzure/initiatives/Enable_Azure_Monitor_for_VMs_55f3eceb-5573-4f18-9695-226972c6d74a/**'
+#      - .github/workflows/manage-azure-policy-9f99cea1.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_9f99cea1}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          testPolicyUploadAzure/initiatives/Public_network_access_should_be_disabled_for_PAAS_services_Deny-PublicEndpoints/**
+          testPolicyUploadAzure/initiatives/Deploy_Azure_Security_Center_configuration_Deploy-ASC-Config/**
+          testPolicyUploadAzure/initiatives/Deploy_Diagnostic_Settings_to_Azure_Services_Deploy-Diag-LogAnalytics/**
+          testPolicyUploadAzure/initiatives/Deploy_SQL_Database_built-in_SQL_security_configuration_Deploy-Sql-Security/**
+          testPolicyUploadAzure/initiatives/Deny_or_Audit_resources_without_Encryption_with_a_customer-managed_key_(CMK)_Enforce-Encryption-CMK/**
+          testPolicyUploadAzure/initiatives/Deny_or_Deploy_and_append_TLS_requirements_and_SSL_enforcement_on_resources_without_Encryption_in_transit_Enforce-EncryptTransit/**
+          testPolicyUploadAzure/policies/RDP_access_from_the_Internet_should_be_blocked_Deny-RDP-From-Internet/**
+          testPolicyUploadAzure/policies/Network_interfaces_should_disable_IP_forwarding_88c0b9da-ce96-4b03-9635-f29a937e2900/**
+          testPolicyUploadAzure/policies/Secure_transfer_to_storage_accounts_should_be_enabled_404c3081-a854-4457-ae30-26a93ef643f9/**
+          testPolicyUploadAzure/policies/Subnets_should_have_a_Network_Security_Group_Deny-Subnet-Without-Nsg/**
+          testPolicyUploadAzure/policies/Auditing_on_SQL_server_should_be_enabled_a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9/**
+          testPolicyUploadAzure/policies/Configure_backup_on_virtual_machines_without_a_given_tag_to_a_new_recovery_services_vault_with_a_default_policy_98d0b9f8-fd90-49c9-88e2-d3baf3b0dd86/**
+          testPolicyUploadAzure/policies/Deploy_SQL_DB_transparent_data_encryption_86a912f6-9a06-4e26-b447-11b16ba8659f/**
+          testPolicyUploadAzure/initiatives/Enable_Azure_Monitor_for_VMs_55f3eceb-5573-4f18-9695-226972c6d74a/**
