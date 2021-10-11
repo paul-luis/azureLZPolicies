@@ -1,0 +1,51 @@
+{
+ "properties": {
+  "displayName": "Public network access onStorage accounts should be disabled",
+  "policyType": "Custom",
+  "mode": "Indexed",
+  "description": "This policy denies creation of storage accounts with IP Firewall exposed to all public endpoints",
+  "metadata": {
+   "version": "1.0.0",
+   "category": "Storage",
+   "createdBy": "addbcd7b-cb6c-48dd-bbad-299f56b0affe",
+   "createdOn": "2021-10-08T16:46:54.7307517Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "effect": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Effect",
+     "description": "Enable or disable the execution of the policy"
+    },
+    "allowedValues": [
+     "Audit",
+     "Deny",
+     "Disabled"
+    ],
+    "defaultValue": "Deny"
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Storage/storageAccounts"
+     },
+     {
+      "field": "Microsoft.Storage/storageAccounts/networkAcls.defaultAction",
+      "notequals": "Deny"
+     }
+    ]
+   },
+   "then": {
+    "effect": "[parameters('effect')]"
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/PLR/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Storage",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "Deny-PublicEndpoint-Storage"
+}
