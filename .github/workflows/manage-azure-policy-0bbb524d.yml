@@ -1,0 +1,74 @@
+name: manage-azure-policy-0bbb524d
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'Enforce-TLS-SSL/policies/AppService_append_enable_https_only_setting_to_enforce_https_setting._Append-AppService-httpsonly/**'
+#      - 'Enforce-TLS-SSL/policies/AppService_append_sites_with_minimum_TLS_version_to_enforce._Append-AppService-latestTLS/**'
+#      - 'Enforce-TLS-SSL/policies/Latest_TLS_version_should_be_used_in_your_API_App_8cb6aa8b-9e41-4f4e-aa25-089a7ac2581e/**'
+#      - 'Enforce-TLS-SSL/policies/Latest_TLS_version_should_be_used_in_your_Function_App_f9d614c5-c173-4d56-95a7-b4437057d193/**'
+#      - 'Enforce-TLS-SSL/policies/Latest_TLS_version_should_be_used_in_your_Web_App_f0e6e85b-9b9f-4a4b-b67b-f730d42f1b0b/**'
+#      - 'Enforce-TLS-SSL/policies/API_App_should_only_be_accessible_over_HTTPS_Deny-AppServiceApiApp-http/**'
+#      - 'Enforce-TLS-SSL/policies/Function_App_should_only_be_accessible_over_HTTPS_Deny-AppServiceFunctionApp-http/**'
+#      - 'Enforce-TLS-SSL/policies/Web_Application_should_only_be_accessible_over_HTTPS_Deny-AppServiceWebApp-http/**'
+#      - 'Enforce-TLS-SSL/policies/Kubernetes_clusters_should_be_accessible_only_over_HTTPS_1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d/**'
+#      - 'Enforce-TLS-SSL/policies/Azure_Database_for_MySQL_server_deploy_a_specific_min_TLS_version_and_enforce_SSL._Deploy-MySQL-sslEnforcement/**'
+#      - 'Enforce-TLS-SSL/policies/MySQL_database_servers_enforce_SSL_connections._Deny-MySql-http/**'
+#      - 'Enforce-TLS-SSL/policies/Azure_Database_for_PostgreSQL_server_deploy_a_specific_min_TLS_version_requirement_and_enforce_SSL_Deploy-PostgreSQL-sslEnforcement/**'
+#      - 'Enforce-TLS-SSL/policies/PostgreSQL_database_servers_enforce_SSL_connection._Deny-PostgreSql-http/**'
+#      - 'Enforce-TLS-SSL/policies/Azure_Cache_for_Redis_Append_a_specific_min_TLS_version_requirement_and_enforce_TLS._Append-Redis-sslEnforcement/**'
+#      - 'Enforce-TLS-SSL/policies/Azure_Cache_for_Redis_Append_and_the_enforcement_that_enableNonSslPort_is_disabled._Append-Redis-disableNonSslPort/**'
+#      - 'Enforce-TLS-SSL/policies/Azure_Cache_for_Redis_only_secure_connections_should_be_enabled_Deny-Redis-http/**'
+#      - 'Enforce-TLS-SSL/policies/SQL_managed_instances_deploy_a_specific_min_TLS_version_requirement._Deploy-SqlMi-minTLS/**'
+#      - 'Enforce-TLS-SSL/policies/SQL_Managed_Instance_should_have_the_minimal_TLS_version_set_to_the_highest_version_Deny-SqlMi-minTLS/**'
+#      - 'Enforce-TLS-SSL/policies/SQL_servers_deploys_a_specific_min_TLS_version_requirement._Deploy-SQL-minTLS/**'
+#      - 'Enforce-TLS-SSL/policies/Azure_SQL_Database_should_have_the_minimal_TLS_version_set_to_the_highest_version_Deny-Sql-minTLS/**'
+#      - 'Enforce-TLS-SSL/policies/Storage_Account_set_to_minumum_TLS_and_Secure_transfer_should_be_enabled_Deny-Storage-minTLS/**'
+#      - 'Enforce-TLS-SSL/policies/Azure_Storage_deploy_a_specific_min_TLS_version_requirement_and_enforce_SSL/HTTPS_Deploy-Storage-sslEnforcement/**'
+#      - .github/workflows/manage-azure-policy-0bbb524d.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_0bbb524d}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          Enforce-TLS-SSL/policies/AppService_append_enable_https_only_setting_to_enforce_https_setting._Append-AppService-httpsonly/**
+          Enforce-TLS-SSL/policies/AppService_append_sites_with_minimum_TLS_version_to_enforce._Append-AppService-latestTLS/**
+          Enforce-TLS-SSL/policies/Latest_TLS_version_should_be_used_in_your_API_App_8cb6aa8b-9e41-4f4e-aa25-089a7ac2581e/**
+          Enforce-TLS-SSL/policies/Latest_TLS_version_should_be_used_in_your_Function_App_f9d614c5-c173-4d56-95a7-b4437057d193/**
+          Enforce-TLS-SSL/policies/Latest_TLS_version_should_be_used_in_your_Web_App_f0e6e85b-9b9f-4a4b-b67b-f730d42f1b0b/**
+          Enforce-TLS-SSL/policies/API_App_should_only_be_accessible_over_HTTPS_Deny-AppServiceApiApp-http/**
+          Enforce-TLS-SSL/policies/Function_App_should_only_be_accessible_over_HTTPS_Deny-AppServiceFunctionApp-http/**
+          Enforce-TLS-SSL/policies/Web_Application_should_only_be_accessible_over_HTTPS_Deny-AppServiceWebApp-http/**
+          Enforce-TLS-SSL/policies/Kubernetes_clusters_should_be_accessible_only_over_HTTPS_1a5b4dca-0b6f-4cf5-907c-56316bc1bf3d/**
+          Enforce-TLS-SSL/policies/Azure_Database_for_MySQL_server_deploy_a_specific_min_TLS_version_and_enforce_SSL._Deploy-MySQL-sslEnforcement/**
+          Enforce-TLS-SSL/policies/MySQL_database_servers_enforce_SSL_connections._Deny-MySql-http/**
+          Enforce-TLS-SSL/policies/Azure_Database_for_PostgreSQL_server_deploy_a_specific_min_TLS_version_requirement_and_enforce_SSL_Deploy-PostgreSQL-sslEnforcement/**
+          Enforce-TLS-SSL/policies/PostgreSQL_database_servers_enforce_SSL_connection._Deny-PostgreSql-http/**
+          Enforce-TLS-SSL/policies/Azure_Cache_for_Redis_Append_a_specific_min_TLS_version_requirement_and_enforce_TLS._Append-Redis-sslEnforcement/**
+          Enforce-TLS-SSL/policies/Azure_Cache_for_Redis_Append_and_the_enforcement_that_enableNonSslPort_is_disabled._Append-Redis-disableNonSslPort/**
+          Enforce-TLS-SSL/policies/Azure_Cache_for_Redis_only_secure_connections_should_be_enabled_Deny-Redis-http/**
+          Enforce-TLS-SSL/policies/SQL_managed_instances_deploy_a_specific_min_TLS_version_requirement._Deploy-SqlMi-minTLS/**
+          Enforce-TLS-SSL/policies/SQL_Managed_Instance_should_have_the_minimal_TLS_version_set_to_the_highest_version_Deny-SqlMi-minTLS/**
+          Enforce-TLS-SSL/policies/SQL_servers_deploys_a_specific_min_TLS_version_requirement._Deploy-SQL-minTLS/**
+          Enforce-TLS-SSL/policies/Azure_SQL_Database_should_have_the_minimal_TLS_version_set_to_the_highest_version_Deny-Sql-minTLS/**
+          Enforce-TLS-SSL/policies/Storage_Account_set_to_minumum_TLS_and_Secure_transfer_should_be_enabled_Deny-Storage-minTLS/**
+          Enforce-TLS-SSL/policies/Azure_Storage_deploy_a_specific_min_TLS_version_requirement_and_enforce_SSL/HTTPS_Deploy-Storage-sslEnforcement/**
