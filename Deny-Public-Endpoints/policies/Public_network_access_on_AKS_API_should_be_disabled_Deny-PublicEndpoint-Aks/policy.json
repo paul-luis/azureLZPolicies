@@ -1,0 +1,51 @@
+{
+ "properties": {
+  "displayName": "Public network access on AKS API should be disabled",
+  "policyType": "Custom",
+  "mode": "Indexed",
+  "description": "This policy denies  the creation of  Azure Kubernetes Service non-private clusters",
+  "metadata": {
+   "version": "1.0.0",
+   "category": "Kubernetes",
+   "createdBy": "addbcd7b-cb6c-48dd-bbad-299f56b0affe",
+   "createdOn": "2021-10-08T16:46:54.7605452Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "effect": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Effect",
+     "description": "Enable or disable the execution of the policy"
+    },
+    "allowedValues": [
+     "Audit",
+     "Deny",
+     "Disabled"
+    ],
+    "defaultValue": "Deny"
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.ContainerService/managedClusters"
+     },
+     {
+      "field": "Microsoft.ContainerService/managedClusters/apiServerAccessProfile.enablePrivateCluster",
+      "notequals": "true"
+     }
+    ]
+   },
+   "then": {
+    "effect": "[parameters('effect')]"
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/PLR/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicEndpoint-Aks",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "Deny-PublicEndpoint-Aks"
+}

@@ -1,0 +1,50 @@
+name: manage-azure-policy-30746d5b
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'Deploy-VM-Monitoring/policies/Configure_Log_Analytics_extension_on_Azure_Arc_enabled_Windows_servers_69af7d4a-7b18-4044-93a9-2651498ef203/**'
+#      - 'Deploy-VM-Monitoring/policies/Deploy_-_Configure_Log_Analytics_extension_to_be_enabled_on_Windows_virtual_machines_0868462e-646c-4fe3-9ced-a733534b6a2c/**'
+#      - 'Deploy-VM-Monitoring/policies/Configure_Log_Analytics_extension_on_Azure_Arc_enabled_Linux_servers_9d2b61b4-1d14-4a63-be30-d4498e7ad2cf/**'
+#      - 'Deploy-VM-Monitoring/policies/Deploy_Log_Analytics_extension_for_Linux_VMs_053d3325-282c-4e5c-b944-24faffd30d77/**'
+#      - 'Deploy-VM-Monitoring/policies/Configure_Dependency_agent_on_Azure_Arc_enabled_Windows_servers_91cb9edd-cd92-4d2f-b2f2-bdd8d065a3d4/**'
+#      - 'Deploy-VM-Monitoring/policies/Deploy_-_Configure_Dependency_agent_to_be_enabled_on_Windows_virtual_machines_1c210e94-a481-4beb-95fa-1571b434fb04/**'
+#      - 'Deploy-VM-Monitoring/policies/Configure_Dependency_agent_on_Azure_Arc_enabled_Linux_servers_deacecc0-9f84-44d2-bb82-46f32d766d43/**'
+#      - 'Deploy-VM-Monitoring/policies/Deploy_Dependency_agent_for_Linux_virtual_machines_4da21710-ce6f-4e06-8cdb-5cc4c93ffbee/**'
+#      - 'Deploy-VM-Monitoring/policies/_Preview_Log_Analytics_Extension_should_be_enabled_for_listed_virtual_machine_images_32133ab0-ee4b-4b44-98d6-042180979d50/**'
+#      - 'Deploy-VM-Monitoring/policies/Dependency_agent_should_be_enabled_for_listed_virtual_machine_images_11ac78e3-31bc-4f0c-8434-37ab963cea07/**'
+#      - .github/workflows/manage-azure-policy-30746d5b.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_30746d5b}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          Deploy-VM-Monitoring/policies/Configure_Log_Analytics_extension_on_Azure_Arc_enabled_Windows_servers_69af7d4a-7b18-4044-93a9-2651498ef203/**
+          Deploy-VM-Monitoring/policies/Deploy_-_Configure_Log_Analytics_extension_to_be_enabled_on_Windows_virtual_machines_0868462e-646c-4fe3-9ced-a733534b6a2c/**
+          Deploy-VM-Monitoring/policies/Configure_Log_Analytics_extension_on_Azure_Arc_enabled_Linux_servers_9d2b61b4-1d14-4a63-be30-d4498e7ad2cf/**
+          Deploy-VM-Monitoring/policies/Deploy_Log_Analytics_extension_for_Linux_VMs_053d3325-282c-4e5c-b944-24faffd30d77/**
+          Deploy-VM-Monitoring/policies/Configure_Dependency_agent_on_Azure_Arc_enabled_Windows_servers_91cb9edd-cd92-4d2f-b2f2-bdd8d065a3d4/**
+          Deploy-VM-Monitoring/policies/Deploy_-_Configure_Dependency_agent_to_be_enabled_on_Windows_virtual_machines_1c210e94-a481-4beb-95fa-1571b434fb04/**
+          Deploy-VM-Monitoring/policies/Configure_Dependency_agent_on_Azure_Arc_enabled_Linux_servers_deacecc0-9f84-44d2-bb82-46f32d766d43/**
+          Deploy-VM-Monitoring/policies/Deploy_Dependency_agent_for_Linux_virtual_machines_4da21710-ce6f-4e06-8cdb-5cc4c93ffbee/**
+          Deploy-VM-Monitoring/policies/_Preview_Log_Analytics_Extension_should_be_enabled_for_listed_virtual_machine_images_32133ab0-ee4b-4b44-98d6-042180979d50/**
+          Deploy-VM-Monitoring/policies/Dependency_agent_should_be_enabled_for_listed_virtual_machine_images_11ac78e3-31bc-4f0c-8434-37ab963cea07/**
